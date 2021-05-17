@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.encore.kafka.dao.PubSubDao">
+	<select id="selectAll_pub" resultType="PubSubVo">
+		SELECT *
+		FROM	TB_EDIS_SBJC_TRTY_IF
+	</select>
+	<select id="selectById" parameterType="int" resultType="PubSubVo">
+		SELECT *
+		FROM	AQ$_INTERNET_AGENT_PRIVS
+		WHERE id = #{id}
+	</select>
+	<insert id="insert_Sub" parameterType="PubSubVo">
+	INSERT ALL   
+	    <foreach collection="list" item="item" index="index" >
+	        INTO TB_AP_SBJC_TRTY_IF  ( 
+	        GTHR_ID                     
+	        , GTHR_DTTM
+	        , SRC_MDL_ID        
+	        , SRC_BSIF_ID                     
+	        , SRC_SCMA
+	        , SRC_ENT_NM      
+	        , SRC_TBL_NM                  
+	        , REF_MDL_ID
+	        , REF_SCMA
+	        , REF_APP_ID      
+	        , REF_APP_NM                     
+	        , PRSS_YN
+	        , PRSS_DTTM
+	        ) VALUES(
+			#{item.gthr_id, jdbcType=VARCHAR}                    
+	        , #{item.gthr_dttm, jdbcType=DATE}                        
+	        , #{item.src_mdl_id, jdbcType=VARCHAR}
+	        , #{item.src_bsif_id, jdbcType=VARCHAR}                    
+	        , #{item.src_scma, jdbcType=VARCHAR}                         
+	        , #{item.src_ent_nm, jdbcType=VARCHAR}
+	        , #{item.src_tbl_nm, jdbcType=VARCHAR}                    
+	        , #{item.ref_mdl_id, jdbcType=VARCHAR}
+	        , #{item.ref_scma, jdbcType=VARCHAR}                          
+	        , #{item.ref_ent_nm, jdbcType=VARCHAR}
+	        , #{item.ref_tbl_nm, jdbcType=VARCHAR}                    
+	        , #{item.prss_yn, jdbcType=VARCHAR}        
+	        , #{item.prss_dttm, jdbcType=DATE}                    
+	        )
+	    </foreach>  
+	    SELECT 1 FROM DUAL
+	</insert>
+</mapper>
